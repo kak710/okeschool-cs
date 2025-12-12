@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wine of Sunflowers — Double Helix</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- SVG gaussian blur filter -->
+  <svg style="position:absolute; width:0; height:0;" aria-hidden="true">
+    <defs>
+      <filter id="gBlur" x="-50%" y="-50%" width="200%" height="200%">
+        <!-- blur amount -->
+        <feGaussianBlur stdDeviation="6" result="b" />
+        <feMerge>
+          <feMergeNode in="b"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <!-- subtle grain to keep shapes crisp when blurred -->
+      <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3" result="g"/>
+        <feBlend in="g" in2="SourceGraphic" mode="screen"/>
+      </filter>
+    </defs>
+  </svg>
+</head>
+<body>
+  <div class="logo">
+    <img src="images/oke2.png" alt="OkeSchool Logo" class="logo-img">
+  </div>
+
+
+
+<div class="top-banner">
+  <h1>Coming Soon<span id="dots"></span></h1>
+  <p>A space for books, adventures, films, food, and gentle thoughts.</p>
+</div>
+
+  <div id="sunflowers" class="sunflower-overlay" aria-hidden="true"></div>
+
+  <script src="sunflowers.js"></script>
+</body>
+</html>
+

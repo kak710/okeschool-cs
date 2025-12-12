@@ -1,0 +1,270 @@
+:root{
+  --wine: #261447;
+  --overlay-w: 280px;
+  --petal-w: 14px;
+  --petal-h: 42px;
+}
+
+/* base reset */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background: var(--wine);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  overflow:hidden;
+}
+
+/* logo */
+.logo{
+  position:fixed;
+  top:150px;
+  left:20px;
+  z-index:80;
+  display:flex;
+  align-items:center;
+}
+.logo-img{
+  height:300px;
+  user-drag: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45));
+}
+
+/* overlay on the right */
+.sunflower-overlay{
+  position:fixed;
+  left:70px;
+  top:0;
+  width:var(--overlay-w);
+  height:100vh;
+  pointer-events:none;
+  z-index:20;
+  overflow:hidden;
+  background: linear-gradient(to left, rgba(255,255,255,0.028), rgba(255,255,255,0));
+}
+
+/* petal visual */
+.petal{
+  position:absolute;
+  width:var(--petal-w);
+  height:var(--petal-h);
+  transform-origin: 50% 85%;
+  border-radius: 50% / 60% 60% 40% 40%;
+  will-change: transform, left, top, opacity;
+  background: radial-gradient(circle at 40% 18%,
+              #FFF1A8 0%, #FFD54A 35%, #FF8F00 100%);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  /* apply gentle blur + keep core sharp via SVG filter */
+  filter: url(#softGlow);
+  mix-blend-mode: screen;
+}
+
+/* add a slightly stronger glow "halo" layer to petals by toggling a class */
+.petal.halo {
+  filter: url(#gBlur);
+  opacity: 0.9;
+}
+
+/* center disk (small, used sparingly) */
+.center {
+  position:absolute;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #52331a 0%, #3b2a15 60%);
+  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.45);
+  will-change: transform, left, top;
+}
+
+/* small responsive tweak: make overlay narrower on tiny screens */
+@media (max-width:520px){
+  :root{ --overlay-w: 180px; }
+  .petal{ width:12px; height:36px }
+}
+
+.top-banner {
+  padding: 80px 30px;
+  text-align: center;
+  position: relative;
+  transform: translateY(26vh);
+  /* background removed completely */
+}
+
+.top-banner h1 {
+  font-family: "IBM Plex Sans", sans-serif;
+  color: #EDE9FF;
+  font-size: 2.2rem;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Prevent shifting: reserve fixed space (3 characters) */
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+#dots {
+  font-family: "Special Elite", monospace; /* only dots change */
+  margin-left: 4px;
+  display: inline-block;
+  width: 3ch;   
+  text-align: left;
+  white-space: pre;
+}
+
+.top-banner p {
+  font-family: "IBM Plex Sans", sans-serif;
+  color: #D0C9EF;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE TUNING
+   ============================================================ */
+
+/* Small phones (≤ 600px) */
+@media (max-width: 600px) {
+
+  /* Scale down logo & reposition */
+  .logo {
+    top: 40px;
+    left: 14px;
+  }
+
+  .logo-img {
+    height: 170px;
+  }
+
+  /* Bring the top-banner lower and scale text down */
+  .top-banner {
+    transform: translateY(22vh);
+    padding: 40px 20px;
+  }
+
+  .top-banner h1 {
+    font-size: 1.6rem;
+    letter-spacing: 0.3px;
+  }
+
+  .top-banner p {
+    font-size: 0.9rem;
+  }
+
+  /* Narrow the sunflower-overlay */
+  :root {
+    --overlay-w: 180px;   /* already set for mobile but reinforce */
+  }
+}
+
+/* Very small phones (≤ 420px) */
+@media (max-width: 420px) {
+
+  .logo {
+    top: 28px;
+    left: 95px;
+  }
+
+  .logo-img {
+    height: 140px;
+  }
+
+  .top-banner {
+    transform: translateY(18vh);
+    padding: 30px 18px;
+  }
+
+  .top-banner h1 {
+    font-size: 1.4rem;
+  }
+
+  .top-banner p {
+    font-size: 0.82rem;
+  }
+
+  /* Even narrower overlay for tiny screens */
+  :root {
+    --overlay-w: 140px;
+  }
+
+  /* Reduce petal size further */
+  .petal {
+    width: 10px;
+    height: 30px;
+  }
+}
+
+/* PHONE ONLY */
+@media (max-width: 600px) {
+
+  .helix-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 28vh;
+    pointer-events: none;
+    overflow: hidden;
+
+    /* keep center clean */
+    mask-image: radial-gradient(
+        circle at center,
+        transparent 0%,
+        transparent 25%,
+        black 75%
+    );
+  }
+
+  .helix-line {
+    position: fixed;
+    width: 90px;
+    height: 8px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 2px;
+    animation: infinityMovePhone 6s linear infinite;
+    transform-origin: center;
+    mix-blend-mode: screen;
+  }
+
+  /* stagger lines */
+  .helix-line:nth-child(1) { animation-delay: 0s; }
+  .helix-line:nth-child(2) { animation-delay: -1s; opacity: 0.14; }
+  .helix-line:nth-child(3) { animation-delay: -2s; opacity: 0.10; }
+  .helix-line:nth-child(4) { animation-delay: -3s; opacity: 0.08; }
+
+  /* PHONE-SPECIFIC ∞ PATH */
+  @keyframes infinityMovePhone {
+    0%   { transform: translate(-12vw, 6vh) rotate(0deg); }
+    25%  { transform: translate(0vw, 0vh) rotate(90deg); }
+    50%  { transform: translate(12vw, 6vh) rotate(180deg); }
+    75%  { transform: translate(0vw, 12vh) rotate(270deg); }
+    100% { transform: translate(-12vw, 6vh) rotate(360deg); }
+  }
+}
+
+/* MOBILE ONLY */
+@media (max-width: 600px) {
+
+  /* narrower overlay */
+  .sunflower-overlay {
+    width: 180px;          /* or 140px for very small phones */
+    left: 70px;
+    top: 250px;
+    height: 50vh;         /* full screen height so petals have space */
+    background: linear-gradient(to left, rgba(255,255,255,0.028), rgba(255,255,255,0));
+  }
+
+  /* optional: scale down petals for small screens */
+  .petal {
+    width: 12px;
+    height: 36px;
+  }
+
+  /* optional halo scaling */
+  .petal.halo {
+    filter: url(#gBlur);
+    opacity: 0.8;
+  }
+}
+
+
