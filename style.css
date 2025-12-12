@@ -246,9 +246,11 @@ body{
 
  @media (max-width: 600px) {
   .sunflower-overlay {
-    left: 70px;        /* keeps overlay offset same as desktop */
-    height: 50vh;      /* mobile height adjustment */
-    /* do NOT set top/right/width unless you want to change */
+    width: 180px;          /* or 140px for very small phones */
+    left: 70px;
+    top: 250px;
+    height: 50vh;         /* full screen height so petals have space */
+    background: linear-gradient(to left, rgba(255,255,255,0.028), rgba(255,255,255,0));
   }
 
   .petal {
