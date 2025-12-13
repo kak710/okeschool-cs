@@ -33,7 +33,7 @@ body{
 /* overlay on the right */
 .sunflower-overlay{
   position:fixed;
-  right:0;
+  right:10px;
   top:0;
   width:var(--overlay-w);
   height:100vh;
