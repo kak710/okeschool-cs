@@ -1,264 +1,290 @@
-:root{
-  --wine: #261447;
-  --overlay-w: 280px;
-  --petal-w: 14px;
-  --petal-h: 42px;
+:root {
+  /* Light (radical reading mode) */
+  --bg: #f7f6f3;
+  --text-main: #1e1e1e;
+  --text-muted: #6e6e6e;
+  --accent: #444;
+  --nav-height: 80px; 
+  --masthead-bg: #f7f6f3; /* Explicitly defining the white color */
 }
 
-/* base reset */
-*{box-sizing:border-box}
-html,body{height:100%;margin:0}
-body{
-  background: var(--wine);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  overflow:hidden;
+body.dark {
+  /* Dark reading mode */
+  --bg: #1c1c1c;
+  --text-main: #ededed;
+  --text-muted: #a0a0a0;
+  --accent: #8a8a8a;
+  /* Retain --masthead-bg as white in dark mode */
 }
 
-/* logo */
-.logo{
-  position:fixed;
-  top:150px;
-  left:20px;
-  z-index:80;
-  display:flex;
-  align-items:center;
-}
-.logo-img{
-  height:300px;
-  user-drag: none;
-  user-select: none;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45));
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* overlay on the right */
-.sunflower-overlay{
-  position:fixed;
-  right:10px;
-  top:0;
-  width:var(--overlay-w);
-  height:100vh;
-  pointer-events:none;
-  z-index:20;
-  overflow:hidden;
-  background: linear-gradient(to left, rgba(255,255,255,0.028), rgba(255,255,255,0));
-}
-/* petal visual */
-.petal{
-  position:absolute;
-  width:var(--petal-w);
-  height:var(--petal-h);
-  transform-origin: 50% 85%;
-  border-radius: 50% / 60% 60% 40% 40%;
-  will-change: transform, left, top, opacity;
-  background: radial-gradient(circle at 40% 18%,
-              #FFF1A8 0%, #FFD54A 35%, #FF8F00 100%);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-  /* apply gentle blur + keep core sharp via SVG filter */
-  filter: url(#softGlow);
-  mix-blend-mode: screen;
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: "IBM Plex Serif", serif;
+  line-height: 1.65;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
-/* add a slightly stronger glow "halo" layer to petals by toggling a class */
-.petal.halo {
-  filter: url(#gBlur);
-  opacity: 0.9;
+/* --- MASTHEAD (Branding Area) --- */
+.masthead {
+  position: relative; 
+  width: 100%;
+  height: var(--nav-height);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 25;
+  
+  /* CRITICAL CHANGE: Always use the light background color */
+  background: var(--masthead-bg); 
+  
+  border-bottom: 1px solid rgba(0,0,0,0.08); 
+  transition: background 0.25s ease;
+  color: var(--text-main); 
 }
 
-/* center disk (small, used sparingly) */
-.center {
-  position:absolute;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background: radial-gradient(circle at 35% 30%, #52331a 0%, #3b2a15 60%);
-  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.45);
-  will-change: transform, left, top;
+/* Ensure the border color remains subtle dark in both modes */
+body.dark .masthead {
+    border-bottom-color: rgba(0,0,0,0.2); /* Use a dark border on the white background */
 }
 
-/* small responsive tweak: make overlay narrower on tiny screens */
-@media (max-width:520px){
-  :root{ --overlay-w: 180px; }
-  .petal{ width:12px; height:36px }
+/* Ensure logos/text remain dark on the white background */
+body.dark .masthead .brand-icon img,
+body.dark .masthead .brand-text-img img {
+    /* Since the SVGs use currentColor, and the masthead is white,
+       we must set the color to the dark color manually for the logos */
+    filter: none;
+    color: var(--text-main); /* This ensures the text color is black-like */
 }
 
-.top-banner {
-  padding: 80px 30px;
-  text-align: center;
-  position: relative;
-  transform: translateY(26vh);
-  /* background removed completely */
+
+.brand-icon {
+  height: 102px; 
+  width: 102px;
+  flex-shrink: 0;
 }
 
-.top-banner h1 {
-  font-family: "IBM Plex Sans", sans-serif;
-  color: #EDE9FF;
-  font-size: 2.2rem;
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
-  display: inline-flex;
+.brand-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.masthead-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.brand-text-img {
+  height: 200px;
+  display: flex;
   align-items: center;
 }
 
-/* Prevent shifting: reserve fixed space (3 characters) */
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
-
-#dots {
-  font-family: "Special Elite", monospace; /* only dots change */
-  margin-left: 4px;
-  display: inline-block;
-  width: 3ch;   
-  text-align: left;
-  white-space: pre;
+.brand-text-img img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
 }
 
-.top-banner p {
+.masthead > div:last-child {
+    width: 48px; 
+    visibility: hidden;
+}
+
+/* --- HERO / COVER --- */
+.hero {
+  position: relative;
+  height: 50vh;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.4)
+  ),
+  url('images/masthead.jpeg') center/cover no-repeat;
+  filter: saturate(0.4);
+  z-index: -1;
+}
+
+.hero-title {
+  max-width: 720px;
+  color: #fff;
+}
+
+.hero-title h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.hero-title p {
   font-family: "IBM Plex Sans", sans-serif;
-  color: #D0C9EF;
+  opacity: 0.9;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+}
+
+/* --- ARTICLE BODY --- */
+article {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 64px 20px 96px;
+}
+
+article p {
+  margin-bottom: 1.4em;
+  font-size: 1.02rem;
+}
+
+article p.lead {
+  font-size: 1.15rem;
+  color: var(--text-main);
+}
+
+article h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 3em 0 1em;
+}
+
+article hr {
+  border: none;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.2;
+  margin: 3em 0;
+}
+
+/* --- META & UTILS --- */
+.meta {
+  margin-top: 64px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.progress {
+  position: fixed;
+  top: 30px; 
+  right: 24px;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 1rem;
-  opacity: 0.8;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  z-index: 10;
 }
 
-/* ============================================================
-   MOBILE RESPONSIVE TUNING
-   ============================================================ */
+/* Since the masthead is now always white, we need to ensure the mode toggle 
+   and progress are visible against both light and dark backgrounds. */
+body.dark .progress {
+    color: var(--text-muted); /* Dark mode page text color */
+}
 
-/* Small phones (≤ 600px) */
+.mode-toggle {
+  position: fixed;
+  top: 26px;
+  left: 24px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 0.9rem;
+  background: transparent;
+  border: 1px solid var(--accent);
+  padding: 6px 10px;
+  color: var(--text-main);
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.mode-toggle:hover {
+  opacity: 1;
+}
+
+/* --- Mobile Responsiveness --- */
+/* --- Mobile Responsiveness --- */
 @media (max-width: 600px) {
-
-  /* Scale down logo & reposition */
-  .logo {
-    top: 40px;
-    left: 14px;
+  
+  /* Use space-between layout for mobile to put icon left and placeholder right */
+  .masthead { 
+    justify-content: space-between;
+    padding: 0 16px; /* Reduced side padding for mobile */
+    gap: 0; /* No gap between icon and center/right */
+    height: 120px; /* Increased height to accommodate the large icon */
+  }
+  
+  /* Keep absolute centering for the text on mobile */
+  .masthead-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+  }
+  
+  /* Re-enable the balancing placeholder on mobile */
+  .masthead > div:last-child {
+      display: block;
+      width: 102px; /* MATCHES NEW ICON WIDTH */
+  }
+  
+  /* Apply your new, larger sizes for mobile */
+  .brand-icon { 
+      height: 102px; 
+      width: 102px; 
+  }
+  
+  /* Adjust text image size */
+  .brand-text-img { 
+      height: 200px; /* Adjusted to fit nicely in the header, slightly smaller than your 200px request, which would be too large for the 120px masthead */
+      /* Note: If you truly wanted height: 200px, the masthead height would need to be 220px+ */
   }
 
-  .logo-img {
-    height: 170px;
+  /* Resetting fixed utilities positioning for better mobile use */
+  .hero { height: 45vh; }
+  article { padding-top: 48px; }
+  
+  .progress { 
+      top: auto; 
+      bottom: 16px; 
+      right: 16px; 
+      font-size: 0.7rem; 
   }
-
-  /* Bring the top-banner lower and scale text down */
-  .top-banner {
-    transform: translateY(22vh);
-    padding: 40px 20px;
-  }
-
-  .top-banner h1 {
-    font-size: 1.6rem;
-    letter-spacing: 0.3px;
-  }
-
-  .top-banner p {
-    font-size: 0.9rem;
-  }
-
-  /* Narrow the sunflower-overlay */
-  :root {
-    --overlay-w: 180px;   /* already set for mobile but reinforce */
-  }
-}
-
-/* Very small phones (≤ 420px) */
-@media (max-width: 420px) {
-
-  .logo {
-    top: 28px;
-    left: 95px;
-  }
-
-  .logo-img {
-    height: 140px;
-  }
-
-  .top-banner {
-    transform: translateY(18vh);
-    padding: 30px 18px;
-  }
-
-  .top-banner h1 {
-    font-size: 1.4rem;
-  }
-
-  .top-banner p {
-    font-size: 0.82rem;
-  }
-
-  /* Even narrower overlay for tiny screens */
-  :root {
-    --overlay-w: 140px;
-  }
-
-  /* Reduce petal size further */
-  .petal {
-    width: 10px;
-    height: 30px;
-  }
-}
-
-/* PHONE ONLY */
-@media (max-width: 600px) {
-
-  .helix-wrapper {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 28vh;
-    pointer-events: none;
-    overflow: hidden;
-
-    /* keep center clean */
-    mask-image: radial-gradient(
-        circle at center,
-        transparent 0%,
-        transparent 25%,
-        black 75%
-    );
-  }
-
-  .helix-line {
-    position: fixed;
-    width: 90px;
-    height: 8px;
-    background: rgba(255,255,255,0.18);
-    border-radius: 2px;
-    animation: infinityMovePhone 6s linear infinite;
-    transform-origin: center;
-    mix-blend-mode: screen;
-  }
-
-  /* stagger lines */
-  .helix-line:nth-child(1) { animation-delay: 0s; }
-  .helix-line:nth-child(2) { animation-delay: -1s; opacity: 0.14; }
-  .helix-line:nth-child(3) { animation-delay: -2s; opacity: 0.10; }
-  .helix-line:nth-child(4) { animation-delay: -3s; opacity: 0.08; }
-
-  /* PHONE-SPECIFIC ∞ PATH */
-  @keyframes infinityMovePhone {
-    0%   { transform: translate(-12vw, 6vh) rotate(0deg); }
-    25%  { transform: translate(0vw, 0vh) rotate(90deg); }
-    50%  { transform: translate(12vw, 6vh) rotate(180deg); }
-    75%  { transform: translate(0vw, 12vh) rotate(270deg); }
-    100% { transform: translate(-12vw, 6vh) rotate(360deg); }
-  }
-}
-
-/* MOBILE ONLY */
-@media (max-width: 600px) {
-
- @media (max-width: 600px) {
-  .sunflower-overlay {
-    width: 180px;          /* or 140px for very small phones */
-    left: 70px;
-    top: 250px;
-    height: 50vh;         /* full screen height so petals have space */
-    background: linear-gradient(to left, rgba(255,255,255,0.028), rgba(255,255,255,0));
-  }
-
-  .petal {
-    width: 12px;
-    height: 36px;
-  }
-
-  .petal.halo {
-    opacity: 0.8;
+  
+  .mode-toggle {
+    top: auto;
+    bottom: 16px;
+    left: 16px;
+    right: auto;
+    border-color: var(--accent);
+    color: var(--text-main);
+    background: var(--bg);
   }
 }
