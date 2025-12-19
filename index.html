@@ -1,44 +1,76 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wine of Sunflowers — Double Helix</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- SVG gaussian blur filter -->
-  <svg style="position:absolute; width:0; height:0;" aria-hidden="true">
-    <defs>
-      <filter id="gBlur" x="-50%" y="-50%" width="200%" height="200%">
-        <!-- blur amount -->
-        <feGaussianBlur stdDeviation="6" result="b" />
-        <feMerge>
-          <feMergeNode in="b"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-      <!-- subtle grain to keep shapes crisp when blurred -->
-      <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="3" result="g"/>
-        <feBlend in="g" in2="SourceGraphic" mode="screen"/>
-      </filter>
-    </defs>
-  </svg>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oke School — Article</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="icon" type="image/svg+xml" href="images/feviconnbg.png">
 </head>
 <body>
-  <div class="logo">
-    <img src="images/oke2.png" alt="OkeSchool Logo" class="logo-img">
-  </div>
 
+  <div class="progress" id="progress">0%</div>
+  <button class="mode-toggle" id="modeToggle">Light mode</button>
 
+  <header class="masthead">
+    
+    <div class="brand-icon">
+        <img src="images/v3nbg.png" alt="Oke School Logo">
+    </div>
+    
+    <div class="masthead-center">
+        <div class="brand-text-img">
+            <img src="images/MH2nbg.png" alt="Oke School - Always at the edge of time">
+        </div>
+    </div>
 
-<div class="top-banner">
-  <h1>Coming Soon<span id="dots"></span></h1>
-  <p>A space for books, adventures, films, food, and gentle thoughts.</p>
-</div>
+    <div style="width: 48px;"></div> </header>
 
-  <div id="sunflowers" class="sunflower-overlay" aria-hidden="true"></div>
+  <section class="hero">
+    <div class="hero-title">
+      <h1>Why Critics Might Be Wrong About Avatar: Fire and Ash?</h1>
+      <p>A Frugal Cinema Patron’s View</p>
+    </div>
+  </section>
 
-  <script src="sunflowers.js"></script>
+  <article>
+    <p class="lead">
+     In a world where ticket prices are skyrocketing, yet you almost feel bad for giant movie studios facing hostile takeovers and political vindictiveness, you run into some hard choices. My seemingly diminishing rupee is still quite precious to me, and I would like to spend it carefully.
+    </p>
+
+    <p>
+      I want a studio like Warner Bros. to remain an independent entity because I love their HBO shows (mostly, I love Craig Mazin). However, the choice is difficult: do I watch their lackluster slate this year to support them—knowing it might signal that "slop" works and encourage them to recycle even worse content next year—or do I only reward the good ones? I might even watch the good ones twice or thrice.
+    </p>
+
+    <p>
+      I watched only about four movies in cinemas this year, two of which were re-releases. And here is the point of this blog: only Avatar: Fire and Ash gave me a feeling of catharsis. You feel the losses, you feel the wails, and you feel the guilt. The "Sky People" are worth hating; their actions are heartless enough to make you feel that their deaths shouldn’t be easy.
+    </p>
+
+    <p>
+      The climax delivers on that promise. A special mention goes to the Tulkun (the whales); they are fascinating to think about. The levitating rocks are still curious—I don’t quite understand why they don’t move on the x-axis, though they do wobble. You don’t see these things in movies often. Concepts from hard sci-fi, like the "paper" from Death’s End, the "droplet" from The Three-Body Problem, or the "astrophage" from Project Hail Mary, are deeply interesting.
+    </p>
+
+    <h2>So, what went wrong for the critics?</h2>
+
+    <p>
+      I am not going to speculate. It is not a question I actually want to entertain; it’s just good clickbait. I simply wish they could enjoy it like us "normal" people.
+    </p>
+    <hr />
+    <p>
+      Conclusion I loved the movie. I felt every emotion it conveyed. The violence is tasteful and cathartic, and the story is rich enough to explore the world. While the actors did their jobs and the writers didn't slack, the prop designers, the team at Weta, and the production designers were the real heroes. It was the perfect movie to end the year.
+    </p>  
+
+    <div class="meta">
+      <span>~ 7 min read</span>
+      <span>Always at the edge of time</span>
+    </div>
+  </article>
+
+  <script src="script.js"></script>
+
 </body>
 </html>
-
